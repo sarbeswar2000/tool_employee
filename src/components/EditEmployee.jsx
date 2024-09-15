@@ -37,7 +37,7 @@ const EditEmployee = () => {
     e.preventDefault();
     try {
       await axios.put(`http://localhost:5000/Auth/editEmployee/${id}`, formData);
-      navigate("/employees"); // Redirect after successful edit
+      navigate("/ShowEmployee"); // Redirect after successful edit
     } catch (error) {
       console.error("Error updating employee:", error);
     }

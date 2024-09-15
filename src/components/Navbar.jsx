@@ -2,7 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 const Navbar = ({ userName, setUserName }) => {
-  const navigate=useNavigate();
+  const user = localStorage.getItem("userName");
+  const navigate = useNavigate();
+  const handleOnclick = (e) => {
+    e.preventDefault();
+    if (user) {
+      navigate("/CreateEmployee");
+    } else {
+      alert("You must be logged in to access the employee page");
+      navigate("/Login");
+    }
+  };
   const logoutHandler = () => {
     localStorage.removeItem("userName");
     setUserName("");
@@ -13,18 +23,19 @@ const Navbar = ({ userName, setUserName }) => {
       <nav>
         <div className="nav-wrapper">
           <ul>
-          <li>
-              <a href="sass.html">HOME</a>
+            <li>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/ShowEmployee">Employee List</Link>
+              <Link to="/ShowEmployee" onClick={handleOnclick}>
+                Employee List
+              </Link>
             </li>
             <li>
               <a href="collapsible.html"></a>
             </li>
           </ul>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
-            
             {userName ? (
               <>
                 <li>

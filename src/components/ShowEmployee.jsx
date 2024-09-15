@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const ShowEmployee = () => {
+  const [message, setMessage] = useState("");
   const [employees, setEmployees] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
 
@@ -18,9 +19,7 @@ const ShowEmployee = () => {
     // Fetch employees from the backend
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5000/Auth/getEmployees"
-        );
+        const response = await axios.get("http://localhost:5000/Auth/getEmployees");
         setEmployees(response.data.employees);
       } catch (error) {
         console.error("Error fetching employees:", error);
@@ -36,6 +35,24 @@ const ShowEmployee = () => {
   const filteredEmployees = employees.filter((employee) =>
     employee.name.toLowerCase().includes(searchKeyword.toLowerCase())
   );
+
+  // Delete employee using database id
+  const handleDelete = async (idd) => {
+    try {
+      // Make DELETE request to the API
+      const response = await axios.delete(`http://localhost:5000/Auth/deleteEmployee/${idd}`);
+      if (response.data.success) {
+        setMessage("Employee deleted successfully.");
+        // Remove the deleted employee from state
+        setEmployees(employees.filter(employee => employee._id !== idd));
+      } else {
+        setMessage("Employee not found.");
+      }
+    } catch (error) {
+      setMessage("Server error occurred.");
+      console.error(error);
+    }
+  };
 
   return (
     <div className="container">
@@ -80,7 +97,7 @@ const ShowEmployee = () => {
         </thead>
         <tbody>
           {filteredEmployees.map((employee, index) => (
-            <tr key={index}>
+            <tr key={employee._id}>
               <td>{index + 1}</td>
               <td>
                 <img
@@ -104,12 +121,20 @@ const ShowEmployee = () => {
                 >
                   Edit
                 </Link>
-                <button className="btn-small red">Delete</button>
+
+                <button
+                  className="btn-small red"
+                  onClick={() => handleDelete(employee._id)}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {message && <p>{message}</p>}
     </div>
   );
 };

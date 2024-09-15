@@ -258,4 +258,27 @@ router.put("/editEmployee/:id", async (req, res) => {
   }
 });
 
+router.delete("/deleteEmployee/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Find the employee by ID and delete it
+    const deletedEmployee = await Employee.findByIdAndDelete(id);
+
+    if (!deletedEmployee) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Employee not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Employee deleted successfully",
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
 module.exports = router;
