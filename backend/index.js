@@ -6,6 +6,7 @@ const app=express();
 
 app.use(cors())
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 app.use("/Auth", require("./route/Auth"));
 // app.get("/", (req, res) => {
 //     res.send("Hello guys this Sarbeswar and this is my first backened run");
