@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 // import 'materialize-css/dist/css/materialize.min.css';
-
+import { useNavigate } from 'react-router-dom';
 const EmployeeForm = () => {
+  const navigate=useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -59,6 +60,8 @@ const EmployeeForm = () => {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setMessage(response.data.message);
+      navigate("/ShowEmployee");
+
     } catch (err) {
       setMessage('Error: ' + err.response?.data?.message || 'Server error');
     }

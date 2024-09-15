@@ -7,7 +7,11 @@ const employeeSchema = new mongoose.Schema({
   designation: { type: String, required: true },
   gender: { type: String, required: true },
   course: [{ type: String, required: true }],
-  image: { type: String, required: true }
+  image: { type: String, required: true },
+  date: {
+    type: Date,
+    default: Date.now, 
+  }
 });
 
 module.exports = mongoose.model("Employee", employeeSchema);

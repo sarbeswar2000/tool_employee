@@ -1,17 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import ShowEmployee from "./ShowEmployee";
 const CreateEmployee = () => {
-    const navigate = useNavigate();
-  const buttnHandler = async () => {
-    alert("you are redirected to creating an employee");
-    navigate("/EmployeeForm");
-  };
+  const navigate = useNavigate();
+ 
   return (
-    <div className="container center-allign">
-      <a class="waves-effect waves-light btn-small" onClick={buttnHandler}>
-        Create Employee{" "}
-      </a>
-    </div>
+    <>
+      <ShowEmployee></ShowEmployee>
+    </>
   );
 };
 

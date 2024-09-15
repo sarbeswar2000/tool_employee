@@ -9,7 +9,6 @@ const connectTomongo = () => {
       useUnifiedTopology: true,
       tls: true,
       tlsInsecure: false,
-     
     })
     .then(() => console.log("MongoDB connected"))
     .catch((err) => console.log(err));

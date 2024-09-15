@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-const Login = () => {
+const Login = ({setUserName}) => {
     const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -29,6 +29,8 @@ const Login = () => {
         formData
       );
       setMessage(response.data.message);
+      localStorage.setItem("userName",formData.f_userName);
+      setUserName(formData.f_userName);
       setErrors([]);
       navigate("/CreateEmployee");
     } catch (err) {
